@@ -1,5 +1,9 @@
 # InterPhish
 
+![interphish](https://github.com/user-attachments/assets/4943e0c2-c103-4c20-a10c-0644c4a55834)
+
+
+
 InterPhish es una herramienta ofensiva diseñada para generar ataques de phishing, enfocados en engañar a usuarios de plataformas bancarias, específicamente Interbank. InterPhish permite crear enlaces falsos que simulan con precisión las páginas de inicio de sesión de Interbank, engañando a la víctima para que interactúe y entregue sus credenciales de acceso.
 
 Con un sistema automatizado, la herramienta genera un enlace que parece legítimo y lo envía a la víctima a través de múltiples vectores (email, SMS, redes sociales). Una vez que la víctima ingresa sus datos en la página falsa, estos se almacenan en tiempo real, permitiendo al atacante acceder a las credenciales de manera rápida y discreta.
@@ -15,7 +19,7 @@ InterPhish está equipada con opciones avanzadas de evasión, disfrazando la URL
 * cloudflared
 * ngrok
 
-# Intalacion
+# Instalación
 
 $ apt update && apt upgrade -y
 
